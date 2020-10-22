@@ -1,0 +1,2 @@
+/home/ivan/OtusHomeWork/OtusParser/build/CMakeFiles/rebuild_cache.dir
+/home/ivan/OtusHomeWork/OtusParser/build/CMakeFiles/edit_cache.dir
