@@ -56,17 +56,54 @@ namespace printIP
                 for (std::size_t i = 0; i < N; ++i)
                 {
                     if (left[i] != right[i])
-                      return left[i] > right[i];
+                        return left[i] > right[i];
                 }
                 return false;
             });
         }
 
-        std::vector<std::array<uint8_t, N>> filter(std::initializer_list<uint8_t> values)
+        template <typename... Args>
+        std::vector<std::array<uint32_t, N>> filter(Args... args) const
         {
+            static_assert(sizeof...(args) <= N);
+
+            std::array<int, sizeof...(args)> array_to_lamda = {args...};
+
+            auto lamda_find = [&array_to_lamda](std::array<uint32_t, N> &array_in_vec) {
+                for (std::size_t i = 0; i < array_to_lamda.size(); ++i)
+                {
+                    if (array_in_vec[i] != array_to_lamda[i])
+                        return false;
+                }
+                return true;
+            };
+
+            auto iterBegin = std::find_if(vect_ip_octets.begin(), vect_ip_octets.end(), lamda_find);
+
+            auto iterEnd = std::find_if_not(iterBegin, vect_ip_octets.end(), lamda_find);
+
+            return std::vector<std::array<uint8_t, N>>(iterBegin, iterEnd);
         }
 
-        void print()
+        std::vector<std::array<uint32_t, N>> fileter_any(uint32_t arg)
+        {
+            auto lamda_find = [arg](std::array<uint32_t, N> &array) {
+                for (auto iterBeg = array.begin(); iterBeg != array.end(); ++iterBeg)
+                {
+                    if((*iterBeg) == arg)
+                    return true;
+                }
+                return false;
+            };
+
+            auto iterBegin = std::find_if(vect_ip_octets.begin(), vect_ip_octets.end(), lamda_find);
+
+            auto iterEnd = std::find_if_not(iterBegin, vect_ip_octets.end(), lamda_find);
+
+            return std::vector<std::array<uint8_t, N>>(iterBegin, iterEnd);
+        }
+
+        void print() const
         {
             for (std::size_t i = 0; i < vect_ip_octets.size(); ++i)
             {
@@ -79,15 +116,6 @@ namespace printIP
                 std::cout << std::endl;
             }
         }
-
-        //void sort_reverse();
-
-        /*  template <uint8_t... Args>
-        IP_Pool<IP_V> filter(Args &&... octets);
-
-        IP_Pool<IP_V> filter_any(uint8_t octet);
-    
-    */
     };
 
     template <std::size_t N>
