@@ -8,6 +8,8 @@
 #include <initializer_list>
 #include "my_ctype.hpp"
 
+namespace otusPrint
+{
 template <std::size_t N>
 std::istream &operator>>(std::istream &os, std::array<uint32_t, N> &array);
 
@@ -134,4 +136,6 @@ std::istream &operator>>(std::istream &os, std::array<uint32_t, N> &array)
             return os;
     }
     return os;
+}
+
 }
