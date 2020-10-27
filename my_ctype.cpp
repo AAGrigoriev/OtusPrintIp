@@ -2,7 +2,3 @@
 #include <vector>
 #include <algorithm>
 
-namespace printIP
-{
-
-}
