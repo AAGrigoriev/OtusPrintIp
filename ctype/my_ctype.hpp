@@ -6,7 +6,6 @@ namespace otusPrint
 {
     struct printf_white_space : std::ctype<char>
     {
-
         static const mask *make_table()
         {
             // make a copy of the "C" locale table

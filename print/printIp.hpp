@@ -2,20 +2,19 @@
 
 #include <array>
 #include <vector>
-#include <iostream>
 #include <limits>
 #include <algorithm>
 #include <initializer_list>
 #include "my_ctype.hpp"
 
+template <std::size_t N>
+std::istream &operator>>(std::istream &os, std::array<uint32_t, N> &array);
+
+template <std::size_t N>
+std::ostream &operator<<(std::ostream &os, const std::vector<std::array<uint32_t, N>> &vect_ip);
+
 namespace otusPrint
 {
-    template <std::size_t N>
-    std::istream &operator>>(std::istream &os, std::array<uint32_t, N> &array);
-
-    template <std::size_t N>
-    std::ostream &operator<<(std::ostream &os, const std::vector<std::array<uint32_t, N>> &vect_ip);
-
     template <std::size_t N>
     class IP_Pool
     {
@@ -110,32 +109,31 @@ namespace otusPrint
             }
         }
     };
-
-    template <std::size_t N>
-    std::ostream &operator<<(std::ostream &os, const std::vector<std::array<uint32_t, N>> &vect_ip)
-    {
-        for (auto vec_begin = vect_ip.begin(); vec_begin != vect_ip.end(); ++vec_begin)
-        {
-            for (auto array_begin = (*vec_begin).begin(); array_begin != (*vec_begin).end(); ++array_begin)
-            {
-                os << (*array_begin);
-                if (array_begin < (*vec_begin).end() - 1)
-                    os << ".";
-            }
-            os << std::endl;
-        }
-        return os;
-    }
-
-    template <std::size_t N>
-    std::istream &operator>>(std::istream &os, std::array<uint32_t, N> &array)
-    {
-        for (uint32_t &octet : array)
-        {
-            if (!(os >> octet))
-                return os;
-        }
-        return os;
-    }
-
 } // namespace otusPrint
+
+template <std::size_t N>
+std::ostream &operator<<(std::ostream &os, const std::vector<std::array<uint32_t, N>> &vect_ip)
+{
+    for (auto vec_begin = vect_ip.begin(); vec_begin != vect_ip.end(); ++vec_begin)
+    {
+        for (auto array_begin = (*vec_begin).begin(); array_begin != (*vec_begin).end(); ++array_begin)
+        {
+            os << (*array_begin);
+            if (array_begin < (*vec_begin).end() - 1)
+                os << ".";
+        }
+        os << std::endl;
+    }
+    return os;
+}
+
+template <std::size_t N>
+std::istream &operator>>(std::istream &os, std::array<uint32_t, N> &array)
+{
+    for (uint32_t &octet : array)
+    {
+        if (!(os >> octet))
+            return os;
+    }
+    return os;
+}

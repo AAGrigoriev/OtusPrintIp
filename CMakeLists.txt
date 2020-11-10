@@ -2,20 +2,16 @@ cmake_minimum_required(VERSION 3.6)
 
 project(otusPrintIp)
 
-set(SOURCE 
-        my_ctype.cpp
-        printtIP.cpp
-)
+add_executable(printIP main.cpp)
 
-set(HEADERS
-        my_ctype.hpp
-        printIp.cpp
+target_include_directories(printIP 
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/ctype
+    ${CMAKE_CURRENT_SOURCE_DIR}/print
 )
-
-add_executable(printIP ${SOURCES} ${HEADERS})
 
 set_target_properties(printIP 
-PROPERTIES
-CXX_STANDARD 17
-CXX_STANDARD_REQUIRED ON
+    PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
 )
