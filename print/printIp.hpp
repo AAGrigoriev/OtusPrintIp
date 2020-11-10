@@ -5,6 +5,8 @@
 #include <limits>
 #include <algorithm>
 #include <initializer_list>
+#include <assert.h>
+
 #include "my_ctype.hpp"
 
 template <std::size_t N>
@@ -23,7 +25,9 @@ namespace otusPrint
         std::vector<std::array<uint32_t, N>> vect_ip_octets;
 
     protected:
+
     public:
+    
         friend std::istream &operator>><>(std::istream &os, std::array<uint32_t, N> &array);
 
         friend std::ostream &operator<<<>(std::ostream &os, const std::vector<std::array<uint32_t, N>> &vect_ip);
@@ -95,7 +99,7 @@ namespace otusPrint
             return out;
         }
 
-        void print() const
+        /*   void print() const
         {
             for (std::size_t i = 0; i < vect_ip_octets.size(); ++i)
             {
@@ -108,6 +112,7 @@ namespace otusPrint
                 std::cout << std::endl;
             }
         }
+        */
     };
 } // namespace otusPrint
 
@@ -133,6 +138,7 @@ std::istream &operator>>(std::istream &os, std::array<uint32_t, N> &array)
     for (uint32_t &octet : array)
     {
         if (!(os >> octet))
+            assert(octet > 0 && octet <= 255 && "invalid param");
             return os;
     }
     return os;
