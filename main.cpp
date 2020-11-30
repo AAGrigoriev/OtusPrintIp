@@ -11,11 +11,11 @@ int main()
 
     pool.print();
 
-   // std::cout << pool.filter(1u);
+    std::cout << pool.filter(1u);
 
-   //  std::cout << pool.filter(46u, 70u);
+    std::cout << pool.filter(46u, 70u);
 
-    //std::cout << pool.fileter_any(46u);
+    std::cout << pool.fileter_any(46u);
 
     return 0;
 }

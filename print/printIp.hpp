@@ -88,7 +88,10 @@ namespace otusPrint
                 for (auto iterBeg = array.cbegin(); iterBeg != array.cend(); ++iterBeg)
                 {
                     if ((*iterBeg) == arg)
+                    {
                         out.push_back(array);
+                        break;
+                    }
                 }
             };
 
